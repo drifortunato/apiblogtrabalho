@@ -39,4 +39,45 @@ public class LeitorController : ControllerBase
             return BadRequest("Erro ao obter os Leitores.");
         }
     }
-}    
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult> Put([FromRoute] int id, [FromBody] Leitor model)
+    {
+        if (id != model.Id)
+            return BadRequest();
+
+        try
+        {
+            if (await context.Leitores.AnyAsync(p => p.Id == id) == false)
+                return NotFound();
+
+            context.Leitores.Update(model);
+            await context.SaveChangesAsync();
+            return Ok("Leitor salvo com sucesso.");
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Delete([FromRoute] int id)
+    {
+        try
+        {
+            Leitor model = await context.Leitores.FindAsync(id);
+
+            if (model == null)
+                return NotFound();
+
+            context.Leitores.Remove(model);
+            await context.SaveChangesAsync();
+            return Ok("Leitor removido com sucesso.");
+        }
+        catch
+        {
+            return BadRequest("Falha ao remover o Leitor.");
+        }
+    }
+}

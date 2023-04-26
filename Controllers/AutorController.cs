@@ -39,4 +39,46 @@ public class AutorController : ControllerBase
             return BadRequest("Erro ao obter os Autores.");
         }
     }
-}    
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult> Put([FromRoute] int id, [FromBody] Autor model)
+    {
+        if (id != model.Id)
+            return BadRequest();
+
+        try
+        {
+            if (await context.Autores.AnyAsync(p => p.Id == id) == false)
+                return NotFound();
+
+            context.Autores.Update(model);
+            await context.SaveChangesAsync();
+            return Ok("Autor salvo com sucesso");
+        }
+        catch
+        {
+            return BadRequest();
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Delete([FromRoute] int id)
+    {
+        try
+        {
+            Autor model = await context.Autores.FindAsync(id);
+
+            if (model == null)
+                return NotFound();
+
+            context.Autores.Remove(model);
+            await context.SaveChangesAsync();
+            return Ok("Autor removido com sucesso");
+        }
+        catch
+        {
+            return BadRequest("Falha ao remover o Autor");
+        }
+    }
+
+}
