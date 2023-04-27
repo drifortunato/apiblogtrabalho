@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 [ApiController]
 public class ComentarioController : ControllerBase
 {
-
     private readonly DataContext context;
 
     public ComentarioController(DataContext Context)

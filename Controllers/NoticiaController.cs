@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 [ApiController]
 public class NoticiaController : ControllerBase
 {
-
     private readonly DataContext context;
 
     public NoticiaController(DataContext Context)
@@ -41,7 +40,7 @@ public class NoticiaController : ControllerBase
         }
     }
 
- [HttpPut("{id}")]
+    [HttpPut("{id}")]
     public async Task<ActionResult> Put([FromRoute] int id, [FromBody] Noticia model)
     {
         if (id != model.Id)

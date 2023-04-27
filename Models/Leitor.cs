@@ -17,7 +17,7 @@ public class Leitor
     [MinLength(8, ErrorMessage = "A senha deve conter no mínimo 8 caracteres")]
     public string Senha { get; set; }
 
-        [Required(ErrorMessage = "Data de Nascimento é obrigatória.")]
-        [Range(typeof(DateTime), "01-01-1900", "31-12-2100")]
+    [Required(ErrorMessage = "Data de Nascimento é obrigatória.")]
+    [Range(typeof(DateTime), "01-01-1900", "31-12-2100")]
     public DateTime Nascimento { get; set; }
 }
